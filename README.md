@@ -1,1 +1,0 @@
-# EconometricModel_CellularAutomaton
