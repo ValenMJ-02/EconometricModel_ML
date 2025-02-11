@@ -4,3 +4,5 @@ Se tomará como guía el estudio ["Aplicación de autómatas celulares en la pre
 
 ## Explicación de las entradas
 
+--- 
+Link libro de excel con casos de prueba: https://1drv.ms/x/c/f683d4d40cda38bf/EZY5WnJhbQBBryxPcZrCdDEBkctX3O2AwqSgSxsRI7lYkw?e=IPwFbV
