@@ -1,0 +1,3 @@
+class RealEstatePredictor:
+    def __init__(self, csv_path):
+        self.csv_path = csv_path
