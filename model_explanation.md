@@ -20,7 +20,7 @@ pip install pandas numpy scikit-learn matplotlib seaborn
 
 ## Datos
 
-Los datos son sacados de **Kaggle** [Link](https://www.kaggle.com/datasets/arjavaniket/real-estate-sales-2001-2022-gl)
+Los datos son sacados de **Kaggle** [Link](https://www.kaggle.com/datasets/utkarshx27/real-estate-sales-2001-2020-gl)
 
 El dataset utilizado para entrenar y testear el modelo contiene información de ventas de bienes raíces en Connecticut entre los años 2001 y 2022. Para este modelo, se seleccionaron los datos de la última década y para decidir las variables que se usaron en el modelo se realizó una matriz de correlación de Pearson, finalmente, se filtraron las siguientes columnas relevantes:
 
@@ -69,6 +69,8 @@ Se han definido los siguientes tipos de pruebas para garantizar la robustez del 
 3. **Casos de Error**:
    - Datos faltantes o incorrectos.
    - Tipo de propiedad desconocido.
+
+Estos casos de prueba se encuentran explicados en el siguiente libro de excel: [Casos de Prueba ML](https://1drv.ms/x/c/f683d4d40cda38bf/EfH2jjzjMn9Eg6g6Ur0FsKIBmuThKwrm03PlM_XblCBf5Q?e=kb987y)
 
 ---
 
