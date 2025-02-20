@@ -102,5 +102,49 @@ class TestRealEstatePredictorExceptions(unittest.TestCase):
         result = self.predictor.query_real_estate(year, city, property_type, price_range)
         self.assertEqual(result, "No hay registros en ese rango de precios.")
 
+
+class TestRealEstatePredictorErrors(unittest.TestCase):
+    
+    @classmethod
+    def setUpClass(cls):
+        data = {
+            "Serial Number": [1, 2, 3, 4, 5],
+            "List Year": [2023, 2024, 2025, 2025, 2026],
+            "Date Recorded": ["2023-02-01", "2024-05-01", "2025-07-01", "2025-09-01", "2026-12-01"],
+            "Town": ["Bridgeport", "New Haven", "Hartford", "Stamford", "Bridgeport"],
+            "Sale Amount": [250000, 450000, 500000, 300000, 400000],
+            "Property Type": ["Single Family", "Condo", "Single Family", "Condo", "Multi Family"]
+        }
+        cls.dummy_df = pd.DataFrame(data)
+        cls.test_csv = "dummy_real_estate_errors.csv"
+        cls.dummy_df.to_csv(cls.test_csv, index=False)
+        cls.predictor = RealEstatePredictor(cls.test_csv)
+
+    def test_invalid_year(self):
+        with self.assertRaises(ValueError) as context:
+            self.predictor.query_real_estate(2030, "Medellín", "Single Family", (200000, 500000))
+        self.assertIn("El año ingresado no es válido", str(context.exception))
+
+    def test_invalid_city(self):
+        with self.assertRaises(ValueError) as context:
+            self.predictor.query_real_estate(2025, "Medellín", "Single Family", (200000, 500000))
+        self.assertIn("La ciudad ingresada no está en la base de datos", str(context.exception))
+
+    def test_invalid_price_range(self):
+        with self.assertRaises(ValueError) as context:
+            self.predictor.query_real_estate(2025, "Hartford", "Single Family", (500000, 200000))
+        self.assertIn("El rango de precios ingresado no es válido", str(context.exception))
+
+    def test_invalid_property_type(self):
+        with self.assertRaises(ValueError) as context:
+            self.predictor.query_real_estate(2025, "New Haven", "Luxury Villa", (100000, 500000))
+        self.assertIn("El tipo de propiedad ingresado no es válido", str(context.exception))
+
+    def test_non_numeric_price_range(self):
+        with self.assertRaises(TypeError) as context:
+            self.predictor.query_real_estate(2025, "Stamford", "Condo", ("abc", "xyz"))
+        self.assertIn("Los valores del rango de precios deben ser numéricos", str(context.exception))
+
+
 if __name__ == "__main__":
     unittest.main(argv=['first-arg-is-ignored'], exit=False)
