@@ -1,0 +1,13 @@
+.vscode/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+*.bak
+*.tmp
+*.log
+*.ipynb_checkpoints/
+.env
+.DS_Store
