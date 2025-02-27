@@ -1,5 +1,10 @@
 # Modelo de Predicción de Precios de Bienes Raíces en Connecticut
 
+***Desarrolladores:***
+   * Mariana Lopera Correa
+   * Kevin Sebastian Cifuentes Lopez
+
+## Descripción del proyecto
 Este proyecto utiliza un modelo de Machine Learning basado en **Random Forest** para predecir los precios de bienes raíces en estado de Connecticut, Estados Unidos. El modelo se entrena con datos de la última década y permite realizar consultas futuras sobre el valor estimado de las propiedades.
 
 ## Requisitos
@@ -71,10 +76,6 @@ El dataset utilizado para entrenar y testear el modelo contiene información de 
 4. **Predicción futura**:
    - Se pueden ingresar valores de ubicación, tipo de propiedad y otras características para obtener una estimación del precio futuro.
 
-
-
-
-
 ## Casos de Prueba
 
 Se han definido los siguientes tipos de pruebas para garantizar la robustez del modelo:
@@ -96,4 +97,47 @@ Estos casos de prueba se encuentran explicados en el siguiente libro de excel: [
 ---
 
 Este proyecto permite estimar el valor de bienes raíces en Medellín utilizando datos históricos y modelos de Machine Learning. Para mejorar su rendimiento, se recomienda ajustar los hiperparámetros y utilizar técnicas de validación cruzada.
+
+
+---
+
+## Estructura del Proyecto
+El código se compone de los siguientes módulos:
+
+- `modelo.py`: Contiene la implementación del modelo de **Random Forest**.
+- `procesamiento.py`: Encargado de la limpieza y transformación de los datos.
+- `interfaz.py`: Proporciona la interfaz en consola para interactuar con el usuario.
+
+## Entradas del Programa
+El usuario puede ingresar datos en dos formatos:
+1. **Archivo CSV**: Conjunto de datos históricos de precios de bienes raíces en Medellín.
+2. **Entrada manual en consola**: Permite consultar predicciones ingresando:
+   - `Año de consulta`
+   - `Barrio de Medellín`
+   - `Rango de precios`
+
+## Procesamiento de Datos
+1. **Carga de Datos**: Se importan desde un archivo CSV o DataFrame.
+2. **Limpieza y Normalización**: Se eliminan datos faltantes y se convierten variables categóricas en numéricas.
+3. **Entrenamiento del Modelo**: Se utiliza un conjunto de datos dividido en 80% para entrenamiento y 20% para prueba.
+4. **Predicción**: El modelo genera estimaciones basadas en las entradas del usuario.
+
+## Salidas del Programa
+El programa proporciona los siguientes tipos de salidas:
+
+1. **Predicciones de Precios**: Devuelve el precio estimado basado en las entradas del usuario.
+2. **Mensajes de Advertencia**: Si no se encuentran datos suficientes para una consulta, se informa al usuario.
+3. **Errores de Entrada**: Manejo de errores como años fuera del rango de datos o barrios inexistentes.
+
+
+## Uso del Programa
+Para ejecutar la interfaz en consola, utilice:
+```bash
+python interfaz.py
+```
+
+El usuario podrá seleccionar opciones para realizar consultas sobre precios de bienes raíces en Medellín de acuerdo con los datos ingresados.
+
+## Contacto
+Para más información o contribuciones, comuníquese con el equipo de desarrollo.
 
