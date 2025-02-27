@@ -1,5 +1,5 @@
 Serial Number,List Year,Date Recorded,Town,Address,Assessed Value,Sale Amount,Sales Ratio,Property Type,Residential Type,Non Use Code,Assessor Remarks,OPM remarks,Location
 1,2020,2020-01-01,New Haven,Address1,200000,220000,1.1,Single Family,Single Family,,,,Loc1
 2,2020,2020-06-01,Hartford,Address2,250000,270000,1.08,Single Family,Single Family,,,,Loc2
-3,2021,2021-03-01,Stamford,Address3,300000,350000,1.095,Condo,Condo,,,,Loc3
-4,2021,2021-07-01,Chaplin,Address4,150000,180000,1.0769,Residential,Residential,,,,Loc4
+3,2021,2021-03-01,New Haven,Address3,210000,230000,1.095,Condo,Condo,,,,Loc1
+4,2021,2021-07-01,Hartford,Address4,260000,280000,1.0769,Condo,Condo,,,,Loc2
