@@ -1,14 +1,14 @@
 import sys
 import os
 import numpy as np
-import matplotlib.pyplot as plt
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
+
 # Ahora podemos importar los módulos sin depender de la estructura de paquete
-from model.storage import load_model_from_gcs
 from model.preprocess import preprocess_data, encode_categorical_columns
+from model.storage import load_model_from_gcs
 from model.storage import load_csv_from_gcs
 
 
