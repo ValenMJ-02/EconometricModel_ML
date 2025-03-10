@@ -1,43 +1,36 @@
-import sys
-import os
 import pandas as pd
+import joblib
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.linear_model import LinearRegression
+from google.cloud import storage
+from .preprocess import load_data_from_gcs, clean_data, encode_categorical
 
-# Obtener la ruta absoluta del directorio raíz del proyecto
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(BASE_DIR)
-
-from model.storage import load_csv_from_gcs, save_model_to_gcs
-from model.preprocess import preprocess_data
-
-
-
-DATA_FILE_PATH = "data/Real_Estate_Sales_2001-2020_GL.csv"
-MODEL_FILENAME = "real_estate_model.pkl"
-
-def train_model():
-    """
-    Entrena un modelo de RandomForestRegressor y lo guarda en Google Cloud Storage.
-    """
-    df = load_csv_from_gcs(DATA_FILE_PATH)
-    df, _ = preprocess_data(df)
+def train_and_save_model(bucket_name: str, file_name: str, model_path: str) -> None:
+    """Entrena un modelo de regresión lineal y lo guarda en Google Cloud Storage."""
+    df = load_data_from_gcs(bucket_name, file_name)
+    df = clean_data(df)
+    df, encoders = encode_categorical(df)
     
     features = ["List Year", "Assessed Value", "Sales Ratio", "Property Type", "Residential Type", "Town"]
     target = "Sale Amount"
-
-    df = df.dropna(subset=[target])
+    
     X = df[features]
     y = df[target]
-
+    
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-    model = RandomForestRegressor(n_estimators=100, random_state=42)
+    
+    model = LinearRegression()
     model.fit(X_train, y_train)
+    
+    joblib.dump(model, "model.pkl")
+    upload_model_to_gcs(bucket_name, "model.pkl", model_path)
+    
+    print("Modelo entrenado y guardado exitosamente en Google Cloud Storage.")
 
-    save_model_to_gcs(model, MODEL_FILENAME)
 
-    y_pred = model.predict(X_test)
-    print("MSE:", mean_squared_error(y_test, y_pred))
-    print("R2 Score:", r2_score(y_test, y_pred))
+def upload_model_to_gcs(bucket_name: str, local_model_path: str, gcs_model_path: str) -> None:
+    """Sube el modelo entrenado a Google Cloud Storage."""
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blob = bucket.blob(gcs_model_path)
+    blob.upload_from_filename(local_model_path)

@@ -1,44 +1,44 @@
-import os
 from google.cloud import storage
 import pandas as pd
 import joblib
+import os
 
-BUCKET_NAME = "tu_bucket_name"  # Cambia esto por el nombre de tu bucket
+class StorageHandler:
+    """Handles file operations in Google Cloud Storage."""
 
-def load_csv_from_gcs(file_path: str) -> pd.DataFrame:
-    """
-    Carga un archivo CSV desde Google Cloud Storage y lo devuelve como un DataFrame.
-    """
-    client = storage.Client()
-    bucket = client.bucket(BUCKET_NAME)
-    blob = bucket.blob(file_path)
-    
-    temp_file = "/tmp/temp_data.csv"
-    blob.download_to_filename(temp_file)
-    
-    return pd.read_csv(temp_file)
+    def __init__(self, bucket_name):
+        self.client = storage.Client()
+        self.bucket = self.client.bucket(bucket_name)
 
-def save_model_to_gcs(model, model_filename: str):
-    """
-    Guarda un modelo entrenado en Google Cloud Storage.
-    """
-    client = storage.Client()
-    bucket = client.bucket(BUCKET_NAME)
-    blob = bucket.blob(f"models/{model_filename}")
+    def upload_file(self, local_path, gcs_path):
+        """Uploads a file to Google Cloud Storage."""
+        blob = self.bucket.blob(gcs_path)
+        blob.upload_from_filename(local_path)
+        print(f"Uploaded {local_path} to {gcs_path} in GCS.")
 
-    temp_file = "/tmp/model.pkl"
-    joblib.dump(model, temp_file)
-    blob.upload_from_filename(temp_file)
+    def download_file(self, gcs_path, local_path):
+        """Downloads a file from Google Cloud Storage."""
+        blob = self.bucket.blob(gcs_path)
+        blob.download_to_filename(local_path)
+        print(f"Downloaded {gcs_path} to {local_path}.")
 
-def load_model_from_gcs(model_filename: str):
-    """
-    Carga un modelo entrenado desde Google Cloud Storage.
-    """
-    client = storage.Client()
-    bucket = client.bucket(BUCKET_NAME)
-    blob = bucket.blob(f"models/{model_filename}")
+    def load_csv_as_dataframe(self, gcs_path):
+        """Loads a CSV file from Google Cloud Storage into a pandas DataFrame."""
+        blob = self.bucket.blob(gcs_path)
+        content = blob.download_as_text()
+        return pd.read_csv(pd.io.common.StringIO(content))
 
-    temp_file = "/tmp/model.pkl"
-    blob.download_to_filename(temp_file)
-    
-    return joblib.load(temp_file)
+    def save_model(self, model, gcs_path):
+        """Saves a trained model to Google Cloud Storage."""
+        local_model_path = "temp_model.pkl"
+        joblib.dump(model, local_model_path)
+        self.upload_file(local_model_path, gcs_path)
+        os.remove(local_model_path)
+
+    def load_model(self, gcs_path):
+        """Loads a model from Google Cloud Storage."""
+        local_model_path = "temp_model.pkl"
+        self.download_file(gcs_path, local_model_path)
+        model = joblib.load(local_model_path)
+        os.remove(local_model_path)
+        return model

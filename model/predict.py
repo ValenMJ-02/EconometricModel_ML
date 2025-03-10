@@ -1,40 +1,39 @@
-import sys
-import os
-import numpy as np
+import pandas as pd
+import joblib
+from google.cloud import storage
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(BASE_DIR)
+def download_model_from_gcs(bucket_name: str, model_path: str, local_model_path: str) -> None:
+    """Descarga el modelo desde Google Cloud Storage."""
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blob = bucket.blob(model_path)
+    blob.download_to_filename(local_model_path)
 
+def load_model(local_model_path: str):
+    """Carga el modelo desde un archivo local."""
+    return joblib.load(local_model_path)
 
-# Ahora podemos importar los módulos sin depender de la estructura de paquete
-from model.preprocess import preprocess_data, encode_categorical_columns
-from model.storage import load_model_from_gcs
-from model.storage import load_csv_from_gcs
+def make_prediction(model, input_data: pd.DataFrame) -> float:
+    """Hace una predicción con el modelo entrenado."""
+    return model.predict(input_data)[0]
 
-
-DATA_FILE_PATH = "data/Real_Estate_Sales_2001-2020_GL.csv"
-MODEL_FILENAME = "real_estate_model.pkl"
-
-def predict_price(town_name: str):
-    """
-    Predice el precio de las propiedades para los años 2025-2027 en una ciudad específica.
-    """
-    model = load_model_from_gcs(MODEL_FILENAME)
-    df = load_csv_from_gcs(DATA_FILE_PATH)
-    df, encoders = preprocess_data(df)
-
-    if town_name not in encoders["Town"].classes_:
-        print("Error: La ciudad ingresada no existe en los datos.")
-        return
+# Ejemplo de uso
+if __name__ == "__main__":
+    bucket_name = "tu_bucket"
+    model_path = "model.pkl"
+    local_model_path = "model.pkl"
     
-    town_encoded = encoders["Town"].transform([town_name])[0]
-    future_years = [2025, 2026, 2027]
-    estimates = {}
-
-    for year in future_years:
-        X_future = df[df["Town"] == town_encoded].copy()
-        X_future["List Year"] = year
-        predicted_prices = model.predict(X_future[["List Year", "Assessed Value", "Sales Ratio", "Property Type", "Residential Type", "Town"]])
-        estimates[year] = np.mean(predicted_prices)
-
-    return estimates
+    download_model_from_gcs(bucket_name, model_path, local_model_path)
+    model = load_model(local_model_path)
+    
+    sample_data = pd.DataFrame({
+        "List Year": [2025],
+        "Assessed Value": [250000],
+        "Sales Ratio": [0.9],
+        "Property Type": [1],
+        "Residential Type": [2],
+        "Town": [5]
+    })
+    
+    predicted_price = make_prediction(model, sample_data)
+    print(f"Precio estimado: ${predicted_price:.2f}")
