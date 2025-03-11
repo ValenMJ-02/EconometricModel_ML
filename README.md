@@ -8,7 +8,6 @@ El modelo no solo se enfoca en predecir los precios actuales, sino que también 
 
 ---
 
-```
 ## **Cómo Ejecutar el Proyecto**
 
 ### **1. Instalación de Dependencias**
