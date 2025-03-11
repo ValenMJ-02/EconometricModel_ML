@@ -36,7 +36,36 @@ EconometricModel_ML/
 ├── config.py
 └── README.md
 ```
+## **Cómo Ejecutar el Proyecto**
 
+### **1. Instalación de Dependencias**
+
+Asegúrate de tener instaladas las siguientes bibliotecas:
+
+```bash
+pip install numpy pandas scikit-learn matplotlib seaborn tabulate
+```
+### **2. Ejecución del Programa**
+
+Para ejecutar el programa, usa el siguiente comando:
+
+```bash
+python src/view/console/main.py
+```
+
+Esto cargará los datos, entrenará el modelo y hará predicciones futuras.
+
+---
+
+## **Pruebas Unitarias**
+
+Para ejecutar las pruebas unitarias, usa el siguiente comando:
+
+```bash
+python -m unittest tests/test_model.py
+```
+
+---
 ---
 
 ## **Descripción de los Archivos**
@@ -81,37 +110,8 @@ Archivo para ignorar archivos y carpetas que no deben ser rastreados por Git.
 
 ---
 
-## **Cómo Ejecutar el Proyecto**
 
-### **1. Instalación de Dependencias**
 
-Asegúrate de tener instaladas las siguientes bibliotecas:
-
-```bash
-pip install numpy pandas scikit-learn matplotlib seaborn tabulate
-```
-
-### **2. Ejecución del Programa**
-
-Para ejecutar el programa, usa el siguiente comando:
-
-```bash
-python src/view/console/main.py
-```
-
-Esto cargará los datos, entrenará el modelo y hará predicciones futuras.
-
----
-
-## **Pruebas Unitarias**
-
-Para ejecutar las pruebas unitarias, usa el siguiente comando:
-
-```bash
-python -m unittest tests/test_model.py
-```
-
----
 
 ## **Explicación del Código**
 
