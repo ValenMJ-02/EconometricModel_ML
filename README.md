@@ -2,39 +2,12 @@
 
 # **Econometric Model - Predicción de Precios de Casas**
 
-Este proyecto tiene como objetivo predecir el precio de las casas utilizando un modelo de regresión lineal. El código está organizado siguiendo el patrón MVC (Model-View-Controller) y está diseñado para ser modular, escalable y fácil de mantener.
+En este proyecto, se desarrolla un modelo de Machine Learning para predecir los precios de venta de viviendas en Ames, Iowa, Estados Unidos. El conjunto de datos utilizado contiene información detallada sobre diversas características de las casas, como el tamaño del lote, el área habitable, la calidad de construcción, el año de construcción, entre otros. El objetivo es utilizar estas características para entrenar un modelo de regresión lineal que pueda predecir con precisión el precio de venta de una casa.
+
+El modelo no solo se enfoca en predecir los precios actuales, sino que también está diseñado para realizar proyecciones futuras, permitiendo estimar cómo podrían evolucionar los precios de las viviendas en los próximos años. Esto es especialmente útil para inversionistas, agentes inmobiliarios y propietarios que deseen tomar decisiones informadas basadas en tendencias del mercado.
 
 ---
 
-## **Estructura del Proyecto**
-
-```
-EconometricModel_ML/
-├── src/
-|    ├── model/
-|    │   ├── __init__.py
-|    │   ├── data_preparation.py
-|    │   ├── feature_engineering.py
-|    │   ├── model_training.py
-|    │   └── future_predictions.py
-|    ├── view/
-|    │   ├── console/
-|    |   |   └─ main.py
-|    │   └── results/
-|    |       └─ visualization.py
-|    └── controller/
-|    │   ├── __init__.py
-|        ├── data_controller.py
-|        └── model_controller.py
-├── tests/
-|    ├── test_data_preparation.py
-|    ├── test_feature_engineering.py
-|    └── test_model_training.py
-├── data/
-|    └── train.csv
-├── .gitignore
-├── config.py
-└── README.md
 ```
 ## **Cómo Ejecutar el Proyecto**
 
@@ -141,35 +114,21 @@ Archivo para ignorar archivos y carpetas que no deben ser rastreados por Git.
 
 ## **Visualización de Resultados**
 
-### **1. Gráfico de Líneas**
+### **Consola**
+
+#### *1. Gráfico de Líneas*
 
 Muestra la tendencia de los precios a lo largo del tiempo.
 
-```python
-import matplotlib.pyplot as plt
 
-def plot_future_predictions(future_predictions):
-    plt.figure(figsize=(10, 6))
-    plt.plot(future_predictions['yearbuilt'], future_predictions['predicted_price'], marker='o')
-    plt.title('Predicción de Precios de Casas en los Próximos Años')
-    plt.xlabel('Año')
-    plt.ylabel('Precio Predicho')
-    plt.grid(True)
-    plt.show()
-```
+#### *2. Tabla Formateada*
 
-### **2. Tabla Formateada**
+Muestra una tabla de esta forma, para facilitar la obsrvación de los resultados
 
-Muestra las predicciones en una tabla legible.
-
-```python
-from tabulate import tabulate
-
-def display_future_predictions(future_predictions):
-    print(tabulate(future_predictions[['yearbuilt', 'predicted_price']], headers='keys', tablefmt='pretty'))
-```
-
----
+   yearbuilt  predicted_price
+0       2026      2746.285057
+1       2027      2750.765683
+2       2028      2755.253615
 
 ## **Contribuciones**
 
