@@ -2,7 +2,7 @@
 
 # **Econometric Model - Predicción de Precios de Casas**
 
-Hecho por :
+Hecho por:
 * Kevin Sebastián Cifuentes López
 * Mariana Lopera Correa
 
