@@ -1,3 +1,8 @@
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
+from sklearn.preprocessing import LabelEncoder  # Importar LabelEncoder
 from model.data_preparation import load_data, split_data, prepare_data
 from model.feature_engineering import transform_target, group_by_mean_and_bin, encode_categorical_columns
 
@@ -20,7 +25,7 @@ def engineer_features(df_train, df_val, df_test, df_full_train):
         df_train = group_by_mean_and_bin(df_train, df_full_train, column, bins, labels)
         df_val = group_by_mean_and_bin(df_val, df_full_train, column, bins, labels)
         df_test = group_by_mean_and_bin(df_test, df_full_train, column, bins, labels)
-    encoder = LabelEncoder()
+    encoder = LabelEncoder()  # Ahora LabelEncoder está definido
     df_train = encode_categorical_columns(df_train, encoder)
     df_val = encode_categorical_columns(df_val, encoder)
     df_test = encode_categorical_columns(df_test, encoder)

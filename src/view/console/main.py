@@ -1,5 +1,40 @@
+import sys
+import os
+from tabulate import tabulate
+import matplotlib.pyplot as plt
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
+
 from controller.data_controller import load_and_prepare_data, engineer_features
 from controller.model_controller import train_and_evaluate_model
+from controller.model_controller import train_and_evaluate_model, predict_future
+
+
+def plot_future_predictions(future_predictions):
+    """
+    Muestra un gráfico de líneas con las predicciones futuras.
+    
+    Args:
+        future_predictions (pd.DataFrame): Predicciones futuras.
+    """
+    plt.figure(figsize=(10, 6))
+    plt.plot(future_predictions['yearbuilt'], future_predictions['predicted_price'], marker='o')
+    plt.title('Predicción de Precios de Casas en los Próximos Años')
+    plt.xlabel('Año')
+    plt.ylabel('Precio Predicho')
+    plt.grid(True)
+    plt.show()
+
+
+def display_future_predictions(future_predictions):
+    """
+    Muestra las predicciones futuras en una tabla formateada.
+    
+    Args:
+        future_predictions (pd.DataFrame): Predicciones futuras.
+    """
+    print(tabulate(future_predictions[['yearbuilt', 'predicted_price']], headers='keys', tablefmt='pretty'))
+    
 
 def main():
     print("Cargando y preparando datos...")
@@ -23,7 +58,13 @@ def main():
     X_val = df_val[selected_columns]
     X_test = df_test[selected_columns]
     
-    train_and_evaluate_model(X_train, y_train, X_val, y_val, X_test, y_test)
+    # Entrenar y evaluar el modelo
+    model = train_and_evaluate_model(X_train, y_train, X_val, y_val, X_test, y_test)
+    
+    # Predecir precios futuros
+    print("\nPrediciendo precios futuros...")
+    future_predictions = predict_future(model, X_train, num_years=3)
+    print(future_predictions[['yearbuilt', 'predicted_price']])
 
 if __name__ == "__main__":
     main()
