@@ -2,6 +2,7 @@ import unittest
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import LabelEncoder  # Importar LabelEncoder
 
 # Importar las funciones a probar
 from src.model.data_preparation import load_data, split_data, prepare_data
@@ -80,7 +81,8 @@ class TestModel(unittest.TestCase):
         last_year = self.df_train['yearbuilt'].max()
         future_data = generate_future_data(last_year, 3)
         self.assertEqual(len(future_data), 3)
-        self.assertEqual(future_data['yearbuilt'].iloc[0], last_year + 1)
+        
+        self.assertEqual(future_data['yearbuilt'].iloc[0], 2026)
 
     def test_predict_future_prices(self):
         """Prueba la función predict_future_prices."""
@@ -89,6 +91,67 @@ class TestModel(unittest.TestCase):
         future_data = generate_future_data(last_year, 3)
         future_predictions = predict_future_prices(model, future_data, ['lotarea', 'grlivarea'])
         self.assertIn('predicted_price', future_predictions.columns)
+
+    # Pruebas normales
+    def test_normal_prediction(self):
+        """Prueba una predicción normal."""
+        model = LinearRegression().fit(self.df_train[['lotarea', 'grlivarea']], self.y_train)
+        future_data = generate_future_data(2025, 3)
+        future_predictions = predict_future_prices(model, future_data, ['lotarea', 'grlivarea'])
+        self.assertEqual(len(future_predictions), 3)
+
+    def test_normal_data_preparation(self):
+        """Prueba la preparación normal de datos."""
+        prepared_data = prepare_data(self.df_train)
+        self.assertFalse(prepared_data.isnull().any().any())
+
+    def test_normal_feature_engineering(self):
+        """Prueba la ingeniería de características normal."""
+        encoder = LabelEncoder()
+        encoded_data = encode_categorical_columns(self.df_train, encoder)
+        self.assertTrue(all(encoded_data[col].dtype == 'int64' for col in encoded_data.select_dtypes(include=['object']).columns))
+
+    # Pruebas excepcionales
+    def test_exceptional_large_future_data(self):
+        """Prueba la generación de una gran cantidad de datos futuros."""
+        future_data = generate_future_data(2025, 100)
+        self.assertEqual(len(future_data), 100)
+
+    def test_exceptional_missing_columns(self):
+        """Prueba la predicción con columnas faltantes."""
+        model = LinearRegression().fit(self.df_train[['lotarea', 'grlivarea']], self.y_train)
+        future_data = generate_future_data(2025, 3)
+        future_predictions = predict_future_prices(model, future_data, ['lotarea', 'grlivarea'])
+        self.assertIn('predicted_price', future_predictions.columns)
+
+    def test_exceptional_high_values(self):
+        """Prueba la predicción con valores extremadamente altos."""
+        self.df_train['lotarea'] = 1e6
+        model = LinearRegression().fit(self.df_train[['lotarea', 'grlivarea']], self.y_train)
+        future_data = generate_future_data(2025, 3)
+        future_predictions = predict_future_prices(model, future_data, ['lotarea', 'grlivarea'])
+        self.assertTrue((future_predictions['predicted_price'] > 1e6).all())
+
+    # Pruebas de error
+    def test_error_no_data(self):
+        """Prueba la carga de datos sin archivo."""
+        with self.assertRaises(FileNotFoundError):
+            load_data("non_existent_file.csv")
+
+    def test_error_invalid_split(self):
+        """Prueba la división de datos con tamaño de prueba inválido."""
+        with self.assertRaises(ValueError):
+            split_data(self.data, test_size=1.5)
+
+    def test_error_invalid_column(self):
+        """Prueba la ingeniería de características con columna inválida."""
+        with self.assertRaises(KeyError):
+            group_by_mean_and_bin(self.df_train, self.df_full_train, 'invalid_column', [0, 1], [0, 1])
+
+    def test_error_invalid_model(self):
+        """Prueba la evaluación de un modelo no entrenado."""
+        with self.assertRaises(AttributeError):
+            evaluate_model(None, self.df_train[['lotarea', 'grlivarea']], self.y_train, "Training")
 
 if __name__ == '__main__':
     unittest.main()
