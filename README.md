@@ -97,13 +97,13 @@ Archivo para ignorar archivos y carpetas que no deben ser rastreados por Git.
 
 ### **2. Ingeniería de Características**
 
-- **`transform_target(df_train, df_val, df_test, target_column)`**: Transforma la variable objetivo usando `log1p`.
+- **`transform_target(dataframe_train, dataframe_validation_features, dataframe_test, target_column)`**: Transforma la variable objetivo usando `log1p`.
 - **`group_by_mean_and_bin(df, df_full, column_name, bins, labels)`**: Agrupa los datos por la media de `saleprice` y los divide en bins.
 - **`encode_categorical_columns(df, encoder)`**: Codifica columnas categóricas usando `LabelEncoder`.
 
 ### **3. Entrenamiento y Evaluación del Modelo**
 
-- **`train_model(X_train, y_train)`**: Entrena un modelo de regresión lineal.
+- **`train_model(X_train, train_target)`**: Entrena un modelo de regresión lineal.
 - **`evaluate_model(model, X, y, dataset_name)`**: Evalúa el modelo y muestra el puntaje.
 
 ### **4. Predicciones Futuras**

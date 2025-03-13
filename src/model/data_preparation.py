@@ -13,12 +13,12 @@ def load_data(file_path):
 
 def split_data(data, test_size=0.2, val_size=0.25, random_state=1):
     """Divide los datos en conjuntos de entrenamiento, validación y prueba."""
-    df_full_train, df_test = train_test_split(data, test_size=test_size, random_state=random_state)
-    df_train, df_val = train_test_split(df_full_train, test_size=val_size, random_state=random_state)
-    df_train = df_train.reset_index(drop=True)
-    df_val = df_val.reset_index(drop=True)
-    df_test = df_test.reset_index(drop=True)
-    return df_train, df_val, df_test, df_full_train
+    df_full_train, dataframe_test = train_test_split(data, test_size=test_size, random_state=random_state)
+    dataframe_train, dataframe_validation_features = train_test_split(df_full_train, test_size=val_size, random_state=random_state)
+    dataframe_train = dataframe_train.reset_index(drop=True)
+    dataframe_validation_features = dataframe_validation_features.reset_index(drop=True)
+    dataframe_test = dataframe_test.reset_index(drop=True)
+    return dataframe_train, dataframe_validation_features, dataframe_test, df_full_train
 
 def prepare_data(dataframe):
     """Prepara los datos llenando valores nulos."""

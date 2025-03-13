@@ -1,5 +1,6 @@
 import sys
 import os
+import pandas as pd
 from sklearn.linear_model import LinearRegression  # Importar LinearRegression
 from model.model_training import evaluate_model
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
@@ -8,13 +9,13 @@ from model.model_training import train_model, evaluate_model
 from model.future_predictions import generate_future_data, predict_future_prices
 
 
-def train_and_evaluate_model(X_train: pd.DataFrame, y_train: pd.Series, X_val: pd.DataFrame,
-                             y_val: pd.Series, X_test: pd.DataFrame, y_test: pd.Series):
+def train_and_evaluate_model(X_train: pd.DataFrame, train_target: pd.Series, X_val: pd.DataFrame,
+                             validation_target: pd.Series, X_test: pd.DataFrame, test_target: pd.Series):
     """Entrena y evalúa el modelo."""
-    model = LinearRegression().fit(X_train, y_train)
-    evaluate_model(model, X_train, y_train, "Training")
-    evaluate_model(model, X_val, y_val, "Validation")
-    evaluate_model(model, X_test, y_test, "Test")
+    model = LinearRegression().fit(X_train, train_target)
+    evaluate_model(model, X_train, train_target, "Training")
+    evaluate_model(model, X_val, validation_target, "Validation")
+    evaluate_model(model, X_test, test_target, "Test")
     return model  # Devuelve el modelo entrenado
     
     

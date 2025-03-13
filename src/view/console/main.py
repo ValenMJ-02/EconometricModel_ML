@@ -1,5 +1,6 @@
 import sys
 import os
+import pandas as pd
 from tabulate import tabulate
 import matplotlib.pyplot as plt
 
@@ -38,10 +39,10 @@ def display_future_predictions(future_predictions: pd.DataFrame):
 
 def main():
     print("Cargando y preparando datos...")
-    df_train, df_val, df_test, y_train, y_val, y_test, df_full_train = divide_dataframes('data/train.csv')
+    dataframe_train, dataframe_validation_features, dataframe_test, train_target, validation_target, test_target, df_full_train = divide_dataframes('data/train.csv')
     
     print("Realizando ingeniería de características...")
-    df_train, df_val, df_test = engineer_features(df_train, df_val, df_test, df_full_train)
+    dataframe_train, dataframe_validation_features, dataframe_test = engineer_features(dataframe_train, dataframe_validation_features, dataframe_test, df_full_train)
     
     print("Entrenando y evaluando el modelo...")
     selected_columns = [
@@ -54,12 +55,12 @@ def main():
         'bsmtqual', 'bsmtexposure', 'heatingqc', 'centralair', 'electrical',
         'functional', 'garagequal', 'paveddrive'
     ]
-    X_train = df_train[selected_columns]
-    X_val = df_val[selected_columns]
-    X_test = df_test[selected_columns]
+    X_train = dataframe_train[selected_columns]
+    X_val = dataframe_validation_features[selected_columns]
+    X_test = dataframe_test[selected_columns]
     
     # Entrenar y evaluar el modelo
-    model = train_and_evaluate_model(X_train, y_train, X_val, y_val, X_test, y_test)
+    model = train_and_evaluate_model(X_train, train_target, X_val, validation_target, X_test, test_target)
     
     # Predecir precios futuros
     print("\nPrediciendo precios futuros...")

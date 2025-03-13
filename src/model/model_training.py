@@ -3,9 +3,9 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from sklearn.linear_model import LinearRegression
 
-def train_model(X_train, y_train):
+def train_model(X_train, train_target):
     """Entrena un modelo de regresión lineal."""
-    model = LinearRegression().fit(X_train, y_train)
+    model = LinearRegression().fit(X_train, train_target)
     return model
 
 def evaluate_model(model, X, y, dataset_name):

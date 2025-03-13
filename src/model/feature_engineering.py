@@ -6,15 +6,15 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
-def transform_target(df_train, df_val, df_test, target_column):
+def transform_target(dataframe_train, dataframe_validation_features, dataframe_test, target_column):
     """Transforma la variable objetivo usando log1p y la elimina de los DataFrames."""
-    y_train = np.log1p(df_train[target_column].values)
-    y_val = np.log1p(df_val[target_column].values)
-    y_test = np.log1p(df_test[target_column].values)
-    df_train = df_train.drop(columns=[target_column])
-    df_val = df_val.drop(columns=[target_column])
-    df_test = df_test.drop(columns=[target_column])
-    return y_train, y_val, y_test, df_train, df_val, df_test
+    train_target = np.log1p(dataframe_train[target_column].values)
+    validation_target = np.log1p(dataframe_validation_features[target_column].values)
+    test_target = np.log1p(dataframe_test[target_column].values)
+    dataframe_train = dataframe_train.drop(columns=[target_column])
+    dataframe_validation_features = dataframe_validation_features.drop(columns=[target_column])
+    dataframe_test = dataframe_test.drop(columns=[target_column])
+    return train_target, validation_target, test_target, dataframe_train, dataframe_validation_features, dataframe_test
 
 def group_by_mean_and_bin(df, df_full, column_name, bins, labels):
     """Agrupa los datos por la media de 'saleprice' y los divide en bins."""

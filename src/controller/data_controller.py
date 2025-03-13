@@ -8,24 +8,24 @@ from model.feature_engineering import transform_target, group_by_mean_and_bin, e
 
 def divide_dataframes(file_path):
     data = load_data(file_path)
-    df_train, df_val, df_test, df_full_train = split_data(data)
-    y_train, y_val, y_test, df_train, df_val, df_test = transform_target(df_train, df_val, df_test, 'saleprice')
+    dataframe_train, dataframe_validation_features, dataframe_test, df_full_train = split_data(data)
+    train_target, validation_target, test_target, dataframe_train, dataframe_validation_features, dataframe_test = transform_target(dataframe_train, dataframe_validation_features, dataframe_test, 'saleprice')
     df_full_train = prepare_data(df_full_train)
-    df_train = prepare_data(df_train)
-    df_val = prepare_data(df_val)
-    df_test = prepare_data(df_test)
-    return df_train, df_val, df_test, y_train, y_val, y_test, df_full_train
+    dataframe_train = prepare_data(dataframe_train)
+    dataframe_validation_features = prepare_data(dataframe_validation_features)
+    dataframe_test = prepare_data(dataframe_test)
+    return dataframe_train, dataframe_validation_features, dataframe_test, train_target, validation_target, test_target, df_full_train
 
-def engineer_features(df_train, df_val, df_test, df_full_train):
+def engineer_features(dataframe_train, dataframe_validation_features, dataframe_test, df_full_train):
     """Realiza ingeniería de características."""
     bins = [0, 100000, 200000, 300000, 450000, 760000]
     labels = [0, 1, 2, 3, 4]
     for column in ['neighborhood', 'exterior2nd', 'housestyle']:
-        df_train = group_by_mean_and_bin(df_train, df_full_train, column, bins, labels)
-        df_val = group_by_mean_and_bin(df_val, df_full_train, column, bins, labels)
-        df_test = group_by_mean_and_bin(df_test, df_full_train, column, bins, labels)
+        dataframe_train = group_by_mean_and_bin(dataframe_train, df_full_train, column, bins, labels)
+        dataframe_validation_features = group_by_mean_and_bin(dataframe_validation_features, df_full_train, column, bins, labels)
+        dataframe_test = group_by_mean_and_bin(dataframe_test, df_full_train, column, bins, labels)
     encoder = LabelEncoder()  # Ahora LabelEncoder está definido
-    df_train = encode_categorical_columns(df_train, encoder)
-    df_val = encode_categorical_columns(df_val, encoder)
-    df_test = encode_categorical_columns(df_test, encoder)
-    return df_train, df_val, df_test
+    dataframe_train = encode_categorical_columns(dataframe_train, encoder)
+    dataframe_validation_features = encode_categorical_columns(dataframe_validation_features, encoder)
+    dataframe_test = encode_categorical_columns(dataframe_test, encoder)
+    return dataframe_train, dataframe_validation_features, dataframe_test
