@@ -1,4 +1,4 @@
-Econometric Model - Predicción de Precios de Casas
+# *Econometric Model - Predicción de Precios de Casas*
 
 *Hecho por:*
 
@@ -126,11 +126,12 @@ Muestra la tendencia de los precios a lo largo del tiempo.
 
 Muestra una tabla de esta forma, para facilitar la obsrvación de los resultados
 
+``
    yearbuilt  predicted_price
 0       2026      2746.285057
 1       2027      2750.765683
 2       2028      2755.253615
-
+``
 ## **Contribuciones**
 
 Si deseas contribuir a este proyecto, sigue estos pasos:
