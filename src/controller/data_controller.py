@@ -6,8 +6,7 @@ from sklearn.preprocessing import LabelEncoder  # Importar LabelEncoder
 from model.data_preparation import load_data, split_data, prepare_data
 from model.feature_engineering import transform_target, group_by_mean_and_bin, encode_categorical_columns
 
-def load_and_prepare_data(file_path):
-    """Carga, divide y prepara los datos."""
+def divide_dataframes(file_path):
     data = load_data(file_path)
     df_train, df_val, df_test, df_full_train = split_data(data)
     y_train, y_val, y_test, df_train, df_val, df_test = transform_target(df_train, df_val, df_test, 'saleprice')

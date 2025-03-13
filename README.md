@@ -93,7 +93,7 @@ Archivo para ignorar archivos y carpetas que no deben ser rastreados por Git.
 
 - **`load_data(file_path)`**: Carga los datos desde un archivo CSV.
 - **`split_data(data)`**: Divide los datos en conjuntos de entrenamiento, validación y prueba.
-- **`prepare_data(dataframe)`**: Llena valores nulos y prepara los datos para el modelado.
+- **`divide_dataframes(dataframe)`**: Llena valores nulos y prepara los datos para el modelado.
 
 ### **2. Ingeniería de Características**
 

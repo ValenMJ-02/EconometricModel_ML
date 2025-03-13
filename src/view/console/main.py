@@ -5,12 +5,12 @@ import matplotlib.pyplot as plt
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 
-from controller.data_controller import load_and_prepare_data, engineer_features
+from model.data_preparation import load_data
+from controller.data_controller import engineer_features, divide_dataframes
 from controller.model_controller import train_and_evaluate_model
 from controller.model_controller import train_and_evaluate_model, predict_future
 
-
-def plot_future_predictions(future_predictions):
+def plot_future_predictions(future_predictions: pd.DataFrame): 
     """
     Muestra un gráfico de líneas con las predicciones futuras.
     
@@ -26,9 +26,9 @@ def plot_future_predictions(future_predictions):
     plt.show()
 
 
-def display_future_predictions(future_predictions):
+def display_future_predictions(future_predictions: pd.DataFrame):
     """
-    Muestra las predicciones futuras en una tabla formateada.
+    Muestra un gráfico de líneas con las predicciones futuras.
     
     Args:
         future_predictions (pd.DataFrame): Predicciones futuras.
@@ -38,7 +38,7 @@ def display_future_predictions(future_predictions):
 
 def main():
     print("Cargando y preparando datos...")
-    df_train, df_val, df_test, y_train, y_val, y_test, df_full_train = load_and_prepare_data('data/train.csv')
+    df_train, df_val, df_test, y_train, y_val, y_test, df_full_train = divide_dataframes('data/train.csv')
     
     print("Realizando ingeniería de características...")
     df_train, df_val, df_test = engineer_features(df_train, df_val, df_test, df_full_train)

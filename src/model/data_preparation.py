@@ -5,7 +5,6 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 
-# Resto del código...
 def load_data(file_path):
     """Carga los datos desde un archivo CSV."""
     data = pd.read_csv(file_path)

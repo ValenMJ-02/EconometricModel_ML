@@ -8,7 +8,8 @@ from model.model_training import train_model, evaluate_model
 from model.future_predictions import generate_future_data, predict_future_prices
 
 
-def train_and_evaluate_model(X_train, y_train, X_val, y_val, X_test, y_test):
+def train_and_evaluate_model(X_train: pd.DataFrame, y_train: pd.Series, X_val: pd.DataFrame,
+                             y_val: pd.Series, X_test: pd.DataFrame, y_test: pd.Series):
     """Entrena y evalúa el modelo."""
     model = LinearRegression().fit(X_train, y_train)
     evaluate_model(model, X_train, y_train, "Training")
@@ -16,7 +17,8 @@ def train_and_evaluate_model(X_train, y_train, X_val, y_val, X_test, y_test):
     evaluate_model(model, X_test, y_test, "Test")
     return model  # Devuelve el modelo entrenado
     
-def predict_future(model, X_train, num_years=3):
+    
+def predict_future(model, X_train: pd.DataFrame, num_years: int = 3) -> pd.DataFrame:
     """
     Predice los precios de las casas para los próximos años.
     
