@@ -8,6 +8,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 from model.data_preparation import load_data
 from controller.data_controller import engineer_features, divide_dataframes
+from controller.model_controller import train_and_evaluate_model
 from controller.model_controller import train_and_evaluate_model, predict_future
 
 def plot_future_predictions(future_predictions: pd.DataFrame): 
