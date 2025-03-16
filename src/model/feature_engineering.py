@@ -4,7 +4,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder
 
 def transform_target(dataframe_train, dataframe_validation_features, dataframe_test, target_column):
     """Transforma la variable objetivo usando log1p y la elimina de los DataFrames."""
