@@ -15,21 +15,21 @@ def transform_target(dataframe_train, dataframe_validation_features, dataframe_t
     dataframe_test = dataframe_test.drop(columns=[target_column])
     return train_target, validation_target, test_target, dataframe_train, dataframe_validation_features, dataframe_test
 
-def group_by_mean_and_bin(df, df_full, column_name, bins, labels):
+def group_by_mean_and_bin(dataframe, dataframe_full, column_name, bins, labels):
     """Agrupa los datos por la media de 'saleprice' y los divide en bins."""
-    mean_prices = df_full.groupby(column_name)['saleprice'].mean()
+    mean_prices = dataframe_full.groupby(column_name)['saleprice'].mean()
     groups = pd.cut(mean_prices, bins=bins, labels=labels)
-    grouped_df = pd.DataFrame({
+    grouped_dataframe = pd.DataFrame({
         column_name: mean_prices.index,
         f'average_saleprice_{column_name}': mean_prices.values,
         f'group_{column_name}': groups
     }).reset_index(drop=True)
-    df = df.merge(grouped_df[[column_name, f'group_{column_name}']], on=column_name, how='left')
-    return df
+    dataframe = dataframe.merge(grouped_dataframe[[column_name, f'group_{column_name}']], on=column_name, how='left')
+    return dataframe
 
-def encode_categorical_columns(df, encoder):
+def encode_categorical_columns(dataframe, encoder):
     """Codifica columnas categóricas usando LabelEncoder."""
-    categorical_columns = df.select_dtypes(include=['object']).columns
+    categorical_columns = dataframe.select_dtypes(include=['object']).columns
     for column in categorical_columns:
-        df[column] = encoder.fit_transform(df[column])
-    return df
+        dataframe[column] = encoder.fit_transform(dataframe[column])
+    return dataframe
