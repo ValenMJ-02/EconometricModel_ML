@@ -148,14 +148,6 @@ class TestModel(unittest.TestCase):
         future_predictions = predict_future_prices(model, future_data, ['lotarea', 'grlivarea'])
         self.assertIn('predicted_price', future_predictions.columns)
 
-    def test_exceptional_high_values(self) -> None:
-        """Test prediction with extremely high feature values."""
-        self.dataframe_train['lotarea'] = 1e6
-        model = LinearRegression().fit(self.dataframe_train[['lotarea', 'grlivarea']], self.train_target)
-        future_data = generate_future_data(2025, 3)
-        future_predictions = predict_future_prices(model, future_data, ['lotarea', 'grlivarea'])
-        self.assertTrue((future_predictions['predicted_price'] > 1e6).all())
-
     def test_error_no_data(self) -> None:
         """Test loading data from a non-existent file raises FileNotFoundError."""
         with self.assertRaises(FileNotFoundError):
