@@ -1,10 +1,10 @@
 import sys
 import os
-
+from sklearn.linear_model import LinearRegression
 # Add the parent directory to sys.path to allow module imports from the parent folder
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
-from sklearn.linear_model import LinearRegression  # Import Linear Regression model from scikit-learn
+  # Import Linear Regression model from scikit-learn
 
 def train_model(X_train, train_target):
     """

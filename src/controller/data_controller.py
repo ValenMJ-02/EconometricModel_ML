@@ -28,9 +28,14 @@ def divide_dataframes(file_path: str, target_column: str, bins_labels: tuple):
         dataframe_train, dataframe_validation_features, dataframe_test, df_full_train = split_data(data)
         
         # Transform the target variable
-        train_target, validation_target, test_target, dataframe_train, dataframe_validation_features, dataframe_test = transform_target(
-            dataframe_train, dataframe_validation_features, dataframe_test, target_column
-        )
+        dataframes = {
+            "train": dataframe_train,
+            "validation": dataframe_validation_features,
+            "test": dataframe_test
+        }
+
+        train_target, validation_target, test_target, dataframe_train, dataframe_validation_features, dataframe_test = transform_target(dataframes, target_column)
+
 
         # Preprocess the datasets before training
         dataframe_train = prepare_data(dataframe_train)
@@ -65,9 +70,24 @@ def engineer_features(dataframes: tuple, df_full_train: pd.DataFrame, categorica
 
         # Apply mean grouping and binning to categorical columns
         for column in categorical_columns:
-            dataframe_train = group_by_mean_and_bin(dataframe_train, df_full_train, column, bins, labels)
-            dataframe_validation_features = group_by_mean_and_bin(dataframe_validation_features, df_full_train, column, bins, labels)
-            dataframe_test = group_by_mean_and_bin(dataframe_test, df_full_train, column, bins, labels)
+            dataframes = {
+                "dataframe_full": df_full_train
+            }
+            
+            column_info = {
+                "column_name": column,
+                "bins": bins,
+                "labels": labels
+            }
+
+            dataframes["dataframe"] = dataframe_train
+            dataframe_train = group_by_mean_and_bin(dataframes, column_info)
+
+            dataframes["dataframe"] = dataframe_validation_features
+            dataframe_validation_features = group_by_mean_and_bin(dataframes, column_info)
+
+            dataframes["dataframe"] = dataframe_test
+            dataframe_test = group_by_mean_and_bin(dataframes, column_info)
 
         # Apply categorical encoding using LabelEncoder
         encoder = LabelEncoder()
