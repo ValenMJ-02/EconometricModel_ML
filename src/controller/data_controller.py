@@ -27,14 +27,14 @@ def divide_dataframes(file_path: str, target_column: str, bins_labels: Tuple[Lis
             - train_target (pd.Series): Transformed target for training.
             - validation_target (pd.Series): Transformed target for validation.
             - test_target (pd.Series): Transformed target for testing.
-            - df_full_train (pd.DataFrame): Full training set before splitting.
+            - full_training_dataset (pd.DataFrame): Full training set before splitting.
     """
     try:
         # Load dataset from the CSV file
         data = load_data(file_path)
         
         # Split dataset into training, validation, and test sets
-        dataframe_train, dataframe_validation_features, dataframe_test, df_full_train = split_data(data)
+        dataframe_train, dataframe_validation_features, dataframe_test, full_training_dataset = split_data(data)
         
         # Transform the target variable
         dataframes = {
@@ -50,21 +50,21 @@ def divide_dataframes(file_path: str, target_column: str, bins_labels: Tuple[Lis
         dataframe_train = prepare_data(dataframe_train)
         dataframe_validation_features = prepare_data(dataframe_validation_features)
         dataframe_test = prepare_data(dataframe_test)
-        df_full_train = prepare_data(df_full_train)
+        full_training_dataset = prepare_data(full_training_dataset)
 
-        return dataframe_train, dataframe_validation_features, dataframe_test, train_target, validation_target, test_target, df_full_train
+        return dataframe_train, dataframe_validation_features, dataframe_test, train_target, validation_target, test_target, full_training_dataset
     except FileNotFoundError:
         raise Exception(f"File '{file_path}' not found.")
     except Exception as e:
         raise Exception(f"Error while splitting data: {str(e)}")
 
-def engineer_features(dataframes: tuple, df_full_train: pd.DataFrame, categorical_columns: list):
+def engineer_features(dataframes: tuple, full_training_dataset: pd.DataFrame, categorical_columns: list):
     """
     Applies feature engineering to the provided DataFrames by grouping and binning categorical columns.
 
     Args:
         dataframes_tuple (Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]): Tuple containing training, validation, and test DataFrames.
-        df_full_train (pd.DataFrame): Full training dataset used as reference for grouping.
+        full_training_dataset (pd.DataFrame): Full training dataset used as reference for grouping.
         categorical_columns (List[str]): List of categorical column names to engineer.
 
     Returns:
@@ -80,7 +80,7 @@ def engineer_features(dataframes: tuple, df_full_train: pd.DataFrame, categorica
         # Apply mean grouping and binning to categorical columns
         for column in categorical_columns:
             dataframes = {
-                "dataframe_full": df_full_train
+                "dataframe_full": full_training_dataset
             }
             
             column_info = {

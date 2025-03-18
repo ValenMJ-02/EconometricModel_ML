@@ -26,7 +26,7 @@ class TestModel(unittest.TestCase):
         self.file_path: str = "data/train.csv"
         self.data: pd.DataFrame = load_data(self.file_path)
         # Using default test_size in split_data
-        self.dataframe_train, self.dataframe_validation_features, self.dataframe_test, self.df_full_train = split_data(self.data)
+        self.dataframe_train, self.dataframe_validation_features, self.dataframe_test, self.full_training_dataset = split_data(self.data)
         # Transform target variable using feature_engineering.transform_target
         dataframes = {
             "train": self.dataframe_train,
@@ -35,7 +35,7 @@ class TestModel(unittest.TestCase):
         }
         (self.train_target, self.validation_target, self.test_target,
          self.dataframe_train, self.dataframe_validation_features, self.dataframe_test) = transform_target(dataframes, 'saleprice')
-        self.df_full_train = prepare_data(self.df_full_train)
+        self.full_training_dataset = prepare_data(self.full_training_dataset)
         self.dataframe_train = prepare_data(self.dataframe_train)
         self.dataframe_validation_features = prepare_data(self.dataframe_validation_features)
         self.dataframe_test = prepare_data(self.dataframe_test)
@@ -74,7 +74,7 @@ class TestModel(unittest.TestCase):
         labels = [0, 1, 2, 3, 4]
         dataframes = {
             "dataframe": self.dataframe_train,
-            "dataframe_full": self.df_full_train
+            "dataframe_full": self.full_training_dataset
         }
         column_info = {
             "column_name": "neighborhood",
@@ -162,7 +162,7 @@ class TestModel(unittest.TestCase):
         """Test that using an invalid column in feature engineering raises KeyError."""
         with self.assertRaises(KeyError):
             group_by_mean_and_bin(
-                {"dataframe": self.dataframe_train, "dataframe_full": self.df_full_train},
+                {"dataframe": self.dataframe_train, "dataframe_full": self.full_training_dataset},
                 {"column_name": "invalid_column", "bins": [0, 1], "labels": [0, 1]}
             )
 

@@ -58,13 +58,13 @@ def main() -> None:
     bins_labels = ([0, 100000, 200000, 300000, 450000, 760000], [0, 1, 2, 3, 4])
 
     # Divide dataframes and prepare target variables
-    dataframe_train, dataframe_validation_features, dataframe_test, train_target, validation_target, test_target, df_full_train = divide_dataframes(
+    dataframe_train, dataframe_validation_features, dataframe_test, train_target, validation_target, test_target, full_training_dataset = divide_dataframes(
         'data/train.csv', target_column, bins_labels
     )
     
     print("Performing feature engineering...")
     dataframe_train, dataframe_validation_features, dataframe_test = engineer_features(
-        (dataframe_train, dataframe_validation_features, dataframe_test), df_full_train, 
+        (dataframe_train, dataframe_validation_features, dataframe_test), full_training_dataset, 
         ['neighborhood', 'exterior2nd', 'housestyle']
     )
     
