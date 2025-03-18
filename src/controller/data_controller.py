@@ -1,24 +1,33 @@
-import sys
-import os
+"""
+Controller module for data-related operations such as loading, splitting, and feature engineering.
+"""
+from typing import Tuple, List, Any, Dict
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from model.data_preparation import load_data, split_data, prepare_data
 from model.feature_engineering import transform_target, group_by_mean_and_bin, encode_categorical_columns
 
-# Add the parent directory to sys.path to allow importing modules from other directories
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
-def divide_dataframes(file_path: str, target_column: str, bins_labels: tuple):
+def divide_dataframes(file_path: str, target_column: str, bins_labels: Tuple[List[float], List[int]]) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, 
+                                                                                                                 pd.Series, pd.Series, pd.Series, pd.DataFrame]:
     """
-    Loads and splits the dataset into training, validation, and test sets.
+    Loads the data, splits it into training, validation, and test sets, transforms the target variable,
+    and prepares the data.
 
     Args:
-        file_path (str): Path to the dataset file.
-        target_column (str): Name of the target column.
-        bins_labels (tuple): Tuple containing bins and labels for grouping.
+        file_path (str): Path to the CSV data file.
+        target_column (str): Column name of the target variable.
+        bins_labels (Tuple[List[float], List[int]]): Tuple containing bins and labels for grouping.
 
     Returns:
-        tuple: DataFrames containing training, validation, and test sets, along with targets.
+        Tuple containing:
+            - dataframe_train (pd.DataFrame): Training data.
+            - dataframe_validation_features (pd.DataFrame): Validation data.
+            - dataframe_test (pd.DataFrame): Test data.
+            - train_target (pd.Series): Transformed target for training.
+            - validation_target (pd.Series): Transformed target for validation.
+            - test_target (pd.Series): Transformed target for testing.
+            - df_full_train (pd.DataFrame): Full training set before splitting.
     """
     try:
         # Load dataset from the CSV file
@@ -51,15 +60,15 @@ def divide_dataframes(file_path: str, target_column: str, bins_labels: tuple):
 
 def engineer_features(dataframes: tuple, df_full_train: pd.DataFrame, categorical_columns: list):
     """
-    Applies feature engineering techniques to enhance the dataset.
+    Applies feature engineering to the provided DataFrames by grouping and binning categorical columns.
 
     Args:
-        dataframes (tuple): Tuple containing training, validation, and test DataFrames.
-        df_full_train (pd.DataFrame): Complete dataset for reference.
-        categorical_columns (list): List of categorical columns to transform.
+        dataframes_tuple (Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]): Tuple containing training, validation, and test DataFrames.
+        df_full_train (pd.DataFrame): Full training dataset used as reference for grouping.
+        categorical_columns (List[str]): List of categorical column names to engineer.
 
     Returns:
-        tuple: Transformed DataFrames for training, validation, and testing.
+        Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]: The updated training, validation, and test DataFrames.
     """
     try:
         dataframe_train, dataframe_validation_features, dataframe_test = dataframes
