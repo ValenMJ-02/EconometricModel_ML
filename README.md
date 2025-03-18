@@ -6,7 +6,7 @@
 
 - ***Mariana Lopera Correa.***
 
-En este proyecto, se desarrolla un modelo de Machine Learning para predecir los precios de venta de viviendas en Ames, Iowa, Estados Unidos. El conjunto de datos utilizado contiene información detallada sobre diversas características de las casas, como el tamaño del lote, el área habitable, la calidad de construcción, el año de construcción, entre otros. El objetivo es utilizar estas características para entrenar un modelo de regresión lineal que pueda predecir con precisión el precio de venta de una casa.
+En este proyecto, se desarrolla un modelo de Machine Learning para predecir los precios de venta de viviendas en Ames, Iowa, Estados Unidos. El conjunto de datos utilizado fue sacado de Kaggle [link datos](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/code) contiene información detallada sobre diversas características de las casas, como el tamaño del lote, el área habitable, la calidad de construcción, el año de construcción, entre otros. El objetivo es utilizar estas características para entrenar un modelo de regresión lineal que pueda predecir con precisión el precio de venta de una casa.
 
 El modelo no solo se enfoca en predecir los precios actuales, sino que también está diseñado para realizar proyecciones futuras, permitiendo estimar cómo podrían evolucionar los precios de las viviendas en los próximos años. Esto es especialmente útil para inversionistas, agentes inmobiliarios y propietarios que deseen tomar decisiones informadas basadas en tendencias del mercado.
 
