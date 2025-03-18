@@ -1,47 +1,47 @@
+"""
+Module for generating future data and predicting future house prices.
+"""
+
+from datetime import datetime
+from typing import List, Any
 import numpy as np
 import pandas as pd
-from datetime import datetime
 
-def generate_future_data(last_year, num_years):
+def generate_future_data(last_year: int, num_years: int) -> pd.DataFrame:
     """
-    Genera datos futuros para los próximos años.
-    
+    Generates future data based on the last year in historical data.
+
     Args:
-        last_year (int): El último año en los datos históricos.
-        num_years (int): Número de años futuros a predecir.
-    
+        last_year (int): The last year in the historical data.
+        num_years (int): Number of future years to generate.
+
     Returns:
-        pd.DataFrame: DataFrame con años futuros.
+        pd.DataFrame: DataFrame containing future years in 'yearbuilt' column.
     """
-    # Obtener el año actual
-    current_year = datetime.now().year
-    
-    # Si last_year es mayor que el año actual, usamos last_year como base
-    base_year = max(last_year, current_year)
-    
-    # Generar años futuros
-    future_years = np.arange(base_year + 1, base_year + num_years + 1)
-    future_data = pd.DataFrame({'yearbuilt': future_years})
+    current_year: int = datetime.now().year
+    base_year: int = max(last_year, current_year)
+    future_years: np.ndarray = np.arange(base_year + 1, base_year + num_years + 1)
+    future_data: pd.DataFrame = pd.DataFrame({'yearbuilt': future_years})
     return future_data
 
-def predict_future_prices(model, future_data, feature_columns):
+def predict_future_prices(model: Any, future_data: pd.DataFrame, feature_columns: List[str]) -> pd.DataFrame:
     """
-    Predice los precios de las casas para los años futuros.
-    
+    Predicts future house prices using the trained model.
+
     Args:
-        model: Modelo entrenado.
-        future_data (pd.DataFrame): Datos futuros.
-        feature_columns (list): Lista de columnas de características.
-    
+        model: The trained machine learning model.
+        future_data (pd.DataFrame): DataFrame containing future data.
+        feature_columns (List[str]): List of feature columns used for prediction.
+
     Returns:
-        pd.DataFrame: DataFrame con predicciones.
+        pd.DataFrame: Future data with an added 'predicted_price' column.
     """
-    # Asegurarse de que future_data tenga las mismas columnas que los datos de entrenamiento
+    # Ensure future_data has the necessary feature columns; fill missing ones with default 0
     for col in feature_columns:
         if col not in future_data.columns:
-            future_data[col] = 0  # Rellenar con valores por defecto
+            future_data[col] = 0
 
-    # Predecir
-    future_predictions = model.predict(future_data[feature_columns])
-    future_data['predicted_price'] = np.expm1(future_predictions)  # Revertir log1p
+    future_predictions: np.ndarray = model.predict(future_data[feature_columns])
+    # Reverse the log1p transformation on predictions
+    future_data['predicted_price'] = np.expm1(future_predictions)
     return future_data
