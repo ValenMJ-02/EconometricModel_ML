@@ -1,38 +1,31 @@
-import sys
-import os
-import pandas as pd
-from sklearn.linear_model import LinearRegression  # Importar LinearRegression
-from model.model_training import evaluate_model
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+"""
+Controller module for model-related operations such as future predictions.
+"""
 
-from model.model_training import train_model, evaluate_model
+from typing import Dict, Any
+import pandas as pd
 from model.future_predictions import generate_future_data, predict_future_prices
 
-
-   
-import pandas as pd
-
-def predict_future(inputs, model):
+def predict_future(inputs: Dict[str, Any], model: Any) -> pd.DataFrame:
     """
-    Predice los precios de las casas para los próximos años.
-    
+    Predicts future house prices based on training data and a trained model.
+
     Args:
-        inputs: Diccionario que contiene 'X_train' (pd.DataFrame) y 'num_years' (int).
-        model: Modelo entrenado.
-    
+        inputs (Dict[str, Any]): Dictionary containing:
+            - "X_train": Training features DataFrame.
+            - "num_years": Number of future years to predict.
+        model: Trained machine learning model.
+
     Returns:
-        pd.DataFrame: Predicciones futuras.
+        pd.DataFrame: DataFrame with future predictions.
     """
     X_train = inputs["X_train"]
     num_years = inputs["num_years"]
-    
-    # Obtener el último año en los datos históricos
+    # Determine the base year from the training data
     last_year = X_train['yearbuilt'].max()
-    
-    # Generar datos futuros
+    # Generate future data
     future_data = generate_future_data(last_year, num_years)
-    
-    # Predecir precios futuros
+    # Use all columns in X_train as features for prediction
     feature_columns = X_train.columns.tolist()
     future_predictions = predict_future_prices(model, future_data, feature_columns)
     return future_predictions
