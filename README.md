@@ -19,7 +19,14 @@ Asegúrate de tener instaladas las siguientes bibliotecas:
 ```bash
 pip install numpy pandas scikit-learn matplotlib seaborn tabulate
 ```
-### **2. Ejecución del Programa**
+
+### **2. Clonar el repositorio**
+
+```bash
+git clone https://github.com/Mayday3003/EconometricModel_ML.git
+```
+
+### **3. Ejecución del Programa**
 
 Para ejecutar el programa, usa el siguiente comando:
 
