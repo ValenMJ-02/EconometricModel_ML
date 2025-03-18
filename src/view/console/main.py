@@ -89,9 +89,18 @@ def main():
     evaluate_model(model, X_val, validation_target, "Validation")
     evaluate_model(model, X_test, test_target, "Test")
 
-    # Predict future house prices
+
+    
+    # Preparar los datos de entrada
+    # Preparar los datos de entrada
+    inputs = {
+        "X_train": X_train,
+        "num_years": 3
+    }
+
+    # Predecir precios futuros
     print("\nPredicting future prices...")
-    future_predictions = predict_future(model, X_train, num_years=3)
+    future_predictions = predict_future(inputs, model)
     print(future_predictions[['yearbuilt', 'predicted_price']])
 
 

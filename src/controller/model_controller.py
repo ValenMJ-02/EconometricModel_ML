@@ -10,18 +10,22 @@ from model.future_predictions import generate_future_data, predict_future_prices
 
 
    
-def predict_future(model, X_train: pd.DataFrame, num_years: int = 3) -> pd.DataFrame:
+import pandas as pd
+
+def predict_future(inputs, model):
     """
     Predice los precios de las casas para los próximos años.
     
     Args:
+        inputs: Diccionario que contiene 'X_train' (pd.DataFrame) y 'num_years' (int).
         model: Modelo entrenado.
-        X_train (pd.DataFrame): Datos de entrenamiento.
-        num_years (int): Número de años futuros a predecir.
     
     Returns:
         pd.DataFrame: Predicciones futuras.
     """
+    X_train = inputs["X_train"]
+    num_years = inputs["num_years"]
+    
     # Obtener el último año en los datos históricos
     last_year = X_train['yearbuilt'].max()
     
