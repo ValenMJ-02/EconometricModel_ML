@@ -8,8 +8,11 @@ import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import LabelEncoder
+import sys
+import os
 
-# Import functions to test
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
 from src.model.data_preparation import load_data, split_data, prepare_data
 from src.model.feature_engineering import transform_target, group_by_mean_and_bin, encode_categorical_columns
 from src.model.model_training import train_model, evaluate_model
