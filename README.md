@@ -110,7 +110,7 @@ Archivo para ignorar archivos y carpetas que no deben ser rastreados por Git.
 
 ### **3. Entrenamiento y Evaluación del Modelo**
 
-- **`train_model(X_train, train_target)`**: Entrena un modelo de regresión lineal.
+- **`train_model(x_train, train_target)`**: Entrena un modelo de regresión lineal.
 - **`evaluate_model(model, X, y, dataset_name)`**: Evalúa el modelo y muestra el puntaje.
 
 ### **4. Predicciones Futuras**

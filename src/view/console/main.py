@@ -81,19 +81,19 @@ def main() -> None:
         'functional', 'garagequal', 'paveddrive'
     ]
     
-    X_train: pd.DataFrame = dataframe_train[selected_columns]
-    X_val: pd.DataFrame = dataframe_validation_features[selected_columns]
-    X_test: pd.DataFrame = dataframe_test[selected_columns]
+    x_train: pd.DataFrame = dataframe_train[selected_columns]
+    x_val: pd.DataFrame = dataframe_validation_features[selected_columns]
+    x_test: pd.DataFrame = dataframe_test[selected_columns]
     
     # Train model and evaluate on training, validation, and test sets
-    model = train_model(X_train, train_target)
-    evaluate_model(model, X_train, train_target, "Training")
-    evaluate_model(model, X_val, validation_target, "Validation")
-    evaluate_model(model, X_test, test_target, "Test")
+    model = train_model(x_train, train_target)
+    evaluate_model(model, x_train, train_target, "Training")
+    evaluate_model(model, x_val, validation_target, "Validation")
+    evaluate_model(model, x_test, test_target, "Test")
 
     # Prepare input data for future prediction
     inputs = {
-        "X_train": X_train,
+        "x_train": x_train,
         "num_years": 3
     }
 
