@@ -1,0 +1,1 @@
+INSERT INTO predicted_prices (city, prices) VALUES ('Test', '[28523.852, 2856.86, 7862.35]');
