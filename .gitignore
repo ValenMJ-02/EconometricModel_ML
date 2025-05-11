@@ -10,4 +10,6 @@ __pycache__/
 *.log
 *.ipynb_checkpoints/
 .DS_Store
-secret_config.py
+
+# credenciales privadas
+.env
