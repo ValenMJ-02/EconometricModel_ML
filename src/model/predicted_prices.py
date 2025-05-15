@@ -1,8 +1,8 @@
 import json
-from typing import Any, List, Dict
+from typing import Any, List, Dict, Optional
 
 class PredictedPrices:
-    def __init__(self, city: str, prices_data: Any):
+    def __init__(self, city: Optional[str], prices_data: Any):
         self.city = city
         if isinstance(prices_data, str):
             self.prices: List[Dict] = json.loads(prices_data)
@@ -17,8 +17,8 @@ class PredictedPrices:
             return False
 
         # ordenamos por 'yearbuilt'
-        sorted_self = sorted(self.prices or [], key=lambda r: r.get('yearbuilt'))
-        sorted_other = sorted(other.prices or [], key=lambda r: r.get('yearbuilt'))
+        sorted_self = sorted(self.prices or [], key=lambda r: r.get('yearbuilt', 0))
+        sorted_other = sorted(other.prices or [], key=lambda r: r.get('yearbuilt', 0))
 
         # serializamos con sort_keys para que la comparación sea determinista
         s1 = json.dumps(sorted_self, sort_keys=True)
