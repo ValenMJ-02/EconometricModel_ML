@@ -24,3 +24,9 @@ class PredictedPrices:
         s1 = json.dumps(sorted_self, sort_keys=True)
         s2 = json.dumps(sorted_other, sort_keys=True)
         return s1 == s2
+    
+    def toDict(self):
+        return {
+            "city": self.city,
+            "prices": self.prices
+        }
