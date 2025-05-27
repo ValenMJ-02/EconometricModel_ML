@@ -1,30 +1,50 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block title %}Resultado de la Búsqueda{% endblock
+%} {% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      {% if city_data %}
+      <div class="card shadow">
+        <div
+          class="card-header text-center"
+          style="background: var(--success-gradient); color: #fff"
+        >
+          <h5 class="mb-0">
+            <i class="fas fa-city me-2"></i>Resultado para: {{ city_data.city }}
+          </h5>
+        </div>
+        <div class="card-body p-4">
+          {% if city_data.prices %}
+          <ul class="list-group list-group-flush">
+            {% for elem in city_data.prices %}
+            <li class="list-group-item">
+              <i class="fas fa-check-circle text-success me-2"></i>{{ elem }}
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <div class="alert alert-info mt-3">
+            No se encontraron precios predichos para esta ciudad.
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% else %}
+      <div class="alert alert-warning text-center">
+        <i class="fas fa-exclamation-triangle me-2"></i>No existen datos para la
+        ciudad solicitada.
+      </div>
+      {% endif %}
 
-{% block title %}Insertar Predicciones{% endblock %}
-
-{% block content %}
-    <div class="container">
-        <h1>Resultados para la ciudad: {{ request.form['inputData'] if request.method == 'POST' else 'Ninguna' }}</h1>
-        {% if city_data %}
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Año de Construcción</th>
-                        <th>Precio de Venta</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in city_data['prices_data'] %}
-                        <tr>
-                            <td>{{ item['yearbuilt'] }}</td>
-                            <td>{{ item['saleprice'] | currency }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <p>No se encontraron datos para la ciudad proporcionada.</p>
-        {% endif %}
-        <a href="/" class="btn btn-primary">Volver al inicio</a>
+      <div class="text-center mt-4">
+        <a
+          href="{{ url_for('buscar.buscar') }}"
+          class="btn btn-outline-primary"
+        >
+          <i class="fas fa-search me-2"></i>Nueva Búsqueda
+        </a>
+      </div>
     </div>
+  </div>
+</div>
 {% endblock %}
