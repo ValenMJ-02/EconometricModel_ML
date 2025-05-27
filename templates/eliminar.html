@@ -1,0 +1,46 @@
+{% extends 'base.html' %} {% block title %}Eliminar Predicción{% endblock %} {%
+block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow">
+        <div
+          class="card-header text-center"
+          style="background: var(--danger-gradient); color: #333"
+        >
+          <h5 class="mb-0">
+            <i class="fas fa-trash-alt me-2"></i>Eliminar Predicción
+          </h5>
+        </div>
+        <div class="card-body p-4">
+          {% if error %}
+          <div class="alert alert-danger">{{ error }}</div>
+          {% endif %}
+          <form method="POST" action="/eliminar">
+            <div class="mb-3">
+              <label for="cityInput" class="form-label">Ciudad</label>
+              <input
+                type="text"
+                class="form-control"
+                id="cityInput"
+                name="city"
+                placeholder="Ej. Bogotá"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-danger w-100">
+              <i class="fas fa-trash-alt me-2"></i>Eliminar
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+          <i class="fas fa-arrow-left me-2"></i>Volver al Inicio
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
