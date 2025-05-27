@@ -1,46 +1,307 @@
-{% extends 'base.html' %} {% block title %}Eliminar Predicción{% endblock %} {%
-block content %}
-<div class="container mt-5">
+{% extends 'base.html' %} {% block title %}Inicio - Predicciones Inteligentes{%
+endblock %} {% block content %}
+<div class="container">
   <div class="row justify-content-center">
-    <div class="col-lg-6">
-      <div class="card shadow">
-        <div
-          class="card-header text-center"
-          style="background: var(--danger-gradient); color: #333"
+    <div class="col-lg-10">
+      <!-- Hero Section -->
+      <div class="text-center mb-5">
+        <div class="mb-4">
+          <i
+            class="fas fa-brain fa-5x text-primary"
+            style="
+              background: var(--primary-gradient);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+            "
+          ></i>
+        </div>
+        <h1
+          class="display-4 fw-bold mb-3"
+          style="
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          "
         >
-          <h5 class="mb-0">
-            <i class="fas fa-trash-alt me-2"></i>Eliminar Predicción
-          </h5>
-        </div>
-        <div class="card-body p-4">
-          {% if error %}
-          <div class="alert alert-danger">{{ error }}</div>
-          {% endif %}
-          <form method="POST" action="/eliminar">
-            <div class="mb-3">
-              <label for="cityInput" class="form-label">Ciudad</label>
-              <input
-                type="text"
-                class="form-control"
-                id="cityInput"
-                name="city"
-                placeholder="Ej. Bogotá"
-                required
-              />
-            </div>
-            <button type="submit" class="btn btn-danger w-100">
-              <i class="fas fa-trash-alt me-2"></i>Eliminar
-            </button>
-          </form>
-        </div>
+          Bienvenido a Predicciones AI
+        </h1>
+        <p class="lead text-muted mb-4">
+          Sistema inteligente de predicción de precios por ciudad. Gestiona,
+          consulta y actualiza datos de manera eficiente.
+        </p>
       </div>
 
-      <div class="text-center mt-4">
-        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
-          <i class="fas fa-arrow-left me-2"></i>Volver al Inicio
-        </a>
+      <!-- Feature Cards -->
+      <div class="row g-4 mb-5">
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <div class="mb-3">
+                <i
+                  class="fas fa-search fa-3x"
+                  style="
+                    background: var(--success-gradient);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                  "
+                ></i>
+              </div>
+              <h5 class="card-title">Buscar Predicciones</h5>
+              <p class="card-text text-muted">
+                Encuentra predicciones de precios específicas por ciudad de
+                manera rápida y precisa.
+              </p>
+              <a href="{{ url_for('buscar.buscar') }}" class="btn btn-success">
+                <i class="fas fa-search me-2"></i>Buscar Ahora
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <div class="mb-3">
+                <i
+                  class="fas fa-plus-circle fa-3x"
+                  style="
+                    background: var(--primary-gradient);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                  "
+                ></i>
+              </div>
+              <h5 class="card-title">Insertar Datos</h5>
+              <p class="card-text text-muted">
+                Agrega nuevas predicciones de precios para ciudades en tu base
+                de datos.
+              </p>
+              <a
+                href="{{ url_for('insertar.insertar') }}"
+                class="btn btn-primary"
+              >
+                <i class="fas fa-plus-circle me-2"></i>Insertar Datos
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <div class="mb-3">
+                <i
+                  class="fas fa-edit fa-3x"
+                  style="
+                    background: var(--warning-gradient);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                  "
+                ></i>
+              </div>
+              <h5 class="card-title">Actualizar Predicciones</h5>
+              <p class="card-text text-muted">
+                Modifica y actualiza predicciones existentes para mantener datos
+                precisos.
+              </p>
+              <a
+                href="{{ url_for('actualizar.actualizar') }}"
+                class="btn btn-warning"
+              >
+                <i class="fas fa-edit me-2"></i>Actualizar
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <div class="mb-3">
+                <i
+                  class="fas fa-trash-alt fa-3x"
+                  style="
+                    background: var(--danger-gradient);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                  "
+                ></i>
+              </div>
+              <h5 class="card-title">Eliminar Datos</h5>
+              <p class="card-text text-muted">
+                Remueve predicciones obsoletas o incorrectas de tu base de
+                datos.
+              </p>
+              <a
+                href="{{ url_for('eliminar.eliminar') }}"
+                class="btn btn-danger"
+              >
+                <i class="fas fa-trash-alt me-2"></i>Eliminar
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <div class="mb-3">
+                <i
+                  class="fas fa-database fa-3x"
+                  style="
+                    background: var(--dark-gradient);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                  "
+                ></i>
+              </div>
+              <h5 class="card-title">Gestión de Tablas</h5>
+              <p class="card-text text-muted">
+                Administra la estructura de tu base de datos creando o
+                eliminando tablas.
+              </p>
+              <div class="d-grid gap-2">
+                <a
+                  href="{{ url_for('admin_tablas.crear_tabla') }}"
+                  class="btn btn-secondary btn-sm"
+                >
+                  <i class="fas fa-plus me-2"></i>Crear Tabla
+                </a>
+                <a
+                  href="{{ url_for('admin_tablas.borrar_tabla') }}"
+                  class="btn btn-outline-danger btn-sm"
+                >
+                  <i class="fas fa-trash me-2"></i>Borrar Tabla
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div
+            class="card h-100 text-center"
+            style="background: var(--secondary-gradient); color: white"
+          >
+            <div class="card-body">
+              <div class="mb-3">
+                <i class="fas fa-lightbulb fa-3x text-white"></i>
+              </div>
+              <h5 class="card-title">¿Necesitas Ayuda?</h5>
+              <p class="card-text">
+                Explora todas las funcionalidades disponibles para sacar el
+                máximo provecho del sistema.
+              </p>
+              <button
+                class="btn btn-light"
+                data-bs-toggle="modal"
+                data-bs-target="#helpModal"
+              >
+                <i class="fas fa-question-circle me-2"></i>Ver Guía
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Help Modal -->
+<div class="modal fade" id="helpModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div
+        class="modal-header"
+        style="background: var(--primary-gradient); color: white"
+      >
+        <h5 class="modal-title">
+          <i class="fas fa-info-circle me-2"></i>Guía de Uso
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h6 class="text-primary">
+              <i class="fas fa-search me-2"></i>Buscar Predicciones
+            </h6>
+            <p class="text-muted small mb-3">
+              Ingresa el nombre de una ciudad para ver sus predicciones de
+              precios.
+            </p>
+
+            <h6 class="text-primary">
+              <i class="fas fa-plus-circle me-2"></i>Insertar Datos
+            </h6>
+            <p class="text-muted small mb-3">
+              Agrega nuevas predicciones usando formato JSON para los precios.
+            </p>
+
+            <h6 class="text-primary">
+              <i class="fas fa-edit me-2"></i>Actualizar
+            </h6>
+            <p class="text-muted small">
+              Modifica predicciones existentes especificando la ciudad y nuevos
+              precios.
+            </p>
+          </div>
+          <div class="col-md-6">
+            <h6 class="text-danger">
+              <i class="fas fa-trash-alt me-2"></i>Eliminar
+            </h6>
+            <p class="text-muted small mb-3">
+              Remueve predicciones específicas por nombre de ciudad.
+            </p>
+
+            <h6 class="text-secondary">
+              <i class="fas fa-database me-2"></i>Gestión de Tablas
+            </h6>
+            <p class="text-muted small mb-3">
+              Crea o elimina tablas completas en la base de datos.
+            </p>
+
+            <div class="alert alert-info">
+              <small>
+                <i class="fas fa-lightbulb me-2"></i>
+                <strong>Tip:</strong> Los precios deben ingresarse en formato
+                JSON válido.
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .card {
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .display-4 {
+    font-weight: 700;
+  }
+
+  .modal-content {
+    border-radius: 20px;
+    border: none;
+  }
+</style>
 {% endblock %}
