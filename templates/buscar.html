@@ -1,29 +1,244 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block title %}Buscar Predicciones por Ciudad{%
+endblock %} {% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-6">
+      <!-- Header Section -->
+      <div class="text-center mb-5">
+        <div class="mb-3">
+          <i
+            class="fas fa-search-location fa-4x"
+            style="
+              background: var(--success-gradient);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+            "
+          ></i>
+        </div>
+        <h1
+          class="display-5 fw-bold mb-3"
+          style="
+            background: var(--success-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          "
+        >
+          Buscar Predicciones
+        </h1>
+        <p class="lead text-muted">
+          Encuentra predicciones de precios específicas ingresando el nombre de
+          la ciudad
+        </p>
+      </div>
 
-{% block title %}Insertar Predicciones{% endblock %}
-
-{% block content %}
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Selecciona una Carpeta para Subir Archivos</h1>
-        <form id="uploadForm" method="POST" action="/buscar" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Selecciona los archivos</label>
-                <input class="form-control" type="file" id="formFile" name="files" multiple>
+      <!-- Search Form Card -->
+      <div class="card shadow-lg">
+        <div
+          class="card-header text-center"
+          style="
+            background: var(--success-gradient);
+            color: white;
+            border-radius: 20px 20px 0 0 !important;
+          "
+        >
+          <h5 class="mb-0">
+            <i class="fas fa-map-marker-alt me-2"></i>
+            Consulta por Ciudad
+          </h5>
+        </div>
+        <div class="card-body p-4">
+          <form id="searchForm" method="POST" action="/buscar">
+            <div class="mb-4">
+              <label for="inputData" class="form-label">
+                <i class="fas fa-city me-2 text-primary"></i>
+                Nombre de la Ciudad
+              </label>
+              <div class="input-group">
+                <span
+                  class="input-group-text"
+                  style="
+                    border-radius: 15px 0 0 15px;
+                    background: var(--success-gradient);
+                    border: none;
+                    color: white;
+                  "
+                >
+                  <i class="fas fa-search"></i>
+                </span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputData"
+                  name="inputData"
+                  placeholder="Ej. Bogotá, Medellín, Cali..."
+                  required
+                  style="border-radius: 0 15px 15px 0; border-left: none"
+                />
+              </div>
+              <div class="form-text">
+                <i class="fas fa-info-circle me-1"></i>
+                Ingresa el nombre completo de la ciudad para obtener mejores
+                resultados
+              </div>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Subir Archivos</button>
-        </form>
-        <div id="fileList" class="mt-3"></div>
-    </div>
 
-    <script>
-        document.getElementById('formFile').addEventListener('change', function(event) {
-            const fileList = event.target.files;
-            const fileListDiv = document.getElementById('fileList');
-            fileListDiv.innerHTML = '<h5>Archivos seleccionados:</h5><ul>';
-            for (let i = 0; i < fileList.length; i++) {
-                fileListDiv.innerHTML += `<li>${fileList[i].name}</li>`;
-            }
-            fileListDiv.innerHTML += '</ul>';
-        });
-    </script>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success btn-lg">
+                <i class="fas fa-search me-2"></i>
+                Buscar Predicciones
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Quick Tips -->
+      <div class="mt-4">
+        <div
+          class="card"
+          style="
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+          "
+        >
+          <div class="card-body">
+            <h6 class="card-title">
+              <i class="fas fa-lightbulb text-warning me-2"></i>
+              Consejos de Búsqueda
+            </h6>
+            <div class="row">
+              <div class="col-md-6">
+                <small class="text-muted">
+                  <i class="fas fa-check text-success me-1"></i>
+                  Usa nombres completos de ciudades
+                </small>
+              </div>
+              <div class="col-md-6">
+                <small class="text-muted">
+                  <i class="fas fa-check text-success me-1"></i>
+                  Verifica la ortografía correcta
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="text-center mt-4">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+          <i class="fas fa-arrow-left me-2"></i>
+          Volver al Inicio
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Searches (Mock) -->
+  <div class="row justify-content-center mt-5">
+    <div class="col-lg-8 col-xl-6">
+      <div class="card">
+        <div class="card-header">
+          <h6 class="mb-0">
+            <i class="fas fa-history me-2 text-muted"></i>
+            Ciudades Populares
+          </h6>
+        </div>
+        <div class="card-body">
+          <div class="d-flex flex-wrap gap-2">
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm city-suggestion"
+              data-city="Bogotá"
+            >
+              <i class="fas fa-map-pin me-1"></i>Bogotá
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm city-suggestion"
+              data-city="Medellín"
+            >
+              <i class="fas fa-map-pin me-1"></i>Medellín
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm city-suggestion"
+              data-city="Cali"
+            >
+              <i class="fas fa-map-pin me-1"></i>Cali
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm city-suggestion"
+              data-city="Barranquilla"
+            >
+              <i class="fas fa-map-pin me-1"></i>Barranquilla
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm city-suggestion"
+              data-city="Cartagena"
+            >
+              <i class="fas fa-map-pin me-1"></i>Cartagena
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .input-group-text {
+    border: 2px solid #e9ecef;
+  }
+
+  .form-control:focus + .input-group-text,
+  .input-group-text + .form-control:focus {
+    border-color: #20c997;
+  }
+
+  .city-suggestion {
+    transition: all 0.3s ease;
+    border-radius: 20px;
+  }
+
+  .city-suggestion:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-lg {
+    font-size: 1.1rem;
+    padding: 0.8rem 2rem;
+  }
+</style>
+
+<script>
+  // Add click functionality to city suggestions
+  document.querySelectorAll(".city-suggestion").forEach((button) => {
+    button.addEventListener("click", function () {
+      const cityName = this.getAttribute("data-city");
+      document.getElementById("inputData").value = cityName;
+      // Add visual feedback
+      this.classList.add("active");
+      setTimeout(() => {
+        this.classList.remove("active");
+      }, 200);
+    });
+  });
+
+  // Add form submission animation
+  document.getElementById("searchForm").addEventListener("submit", function () {
+    const submitBtn = this.querySelector('button[type="submit"]');
+    submitBtn.innerHTML =
+      '<i class="fas fa-spinner fa-spin me-2"></i>Buscando...';
+    submitBtn.disabled = true;
+  });
+</script>
 {% endblock %}
