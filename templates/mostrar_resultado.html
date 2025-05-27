@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Insertar Predicciones{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Resultados para la ciudad: {{ request.form['inputData'] if request.method == 'POST' else 'Ninguna' }}</h1>
+        {% if city_data %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Año de Construcción</th>
+                        <th>Precio de Venta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in city_data['prices_data'] %}
+                        <tr>
+                            <td>{{ item['yearbuilt'] }}</td>
+                            <td>{{ item['saleprice'] | currency }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No se encontraron datos para la ciudad proporcionada.</p>
+        {% endif %}
+        <a href="/" class="btn btn-primary">Volver al inicio</a>
+    </div>
+{% endblock %}

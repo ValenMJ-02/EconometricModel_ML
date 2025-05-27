@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Actualizar Predicciones{% endblock %}
+
+{% block content %}
+<h1>Actualizar Predicciones</h1>
+<form method="POST">
+    <div class="mb-3">
+        <label for="city" class="form-label">Ciudad</label>
+        <input type="text" class="form-control" id="city" name="city" required>
+    </div>
+    <div class="mb-3">
+        <label for="prices" class="form-label">Precios (JSON)</label>
+        <input type="text" class="form-control" id="prices" name="prices" required>
+    </div>
+    <button type="submit" class="btn btn-warning">Actualizar</button>
+</form>
+{% endblock %}

@@ -1,18 +1,29 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Subir Archivos desde una Carpeta</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Selecciona una Carpeta para Subir Archivos</h1>
-        <form id="uploadForm" method="POST" action="/buscar"">
-            <input type="text" name="inputData"/>
-            <input type="submit" />
+{% extends 'base.html' %}
+
+{% block title %}Insertar Predicciones{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Selecciona una Carpeta para Subir Archivos</h1>
+        <form id="uploadForm" method="POST" action="/buscar" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Selecciona los archivos</label>
+                <input class="form-control" type="file" id="formFile" name="files" multiple>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Subir Archivos</button>
         </form>
         <div id="fileList" class="mt-3"></div>
     </div>
-</body>
-</html>
+
+    <script>
+        document.getElementById('formFile').addEventListener('change', function(event) {
+            const fileList = event.target.files;
+            const fileListDiv = document.getElementById('fileList');
+            fileListDiv.innerHTML = '<h5>Archivos seleccionados:</h5><ul>';
+            for (let i = 0; i < fileList.length; i++) {
+                fileListDiv.innerHTML += `<li>${fileList[i].name}</li>`;
+            }
+            fileListDiv.innerHTML += '</ul>';
+        });
+    </script>
+{% endblock %}
