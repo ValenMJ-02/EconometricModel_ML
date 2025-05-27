@@ -1,18 +1,67 @@
-{% extends 'base.html' %}
-
-{% block title %}Actualizar Predicciones{% endblock %}
-
+{% extends 'base.html' %} {% block title %}Actualizar Predicciones{% endblock %}
 {% block content %}
-<h1>Actualizar Predicciones</h1>
-<form method="POST">
-    <div class="mb-3">
-        <label for="city" class="form-label">Ciudad</label>
-        <input type="text" class="form-control" id="city" name="city" required>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow">
+        <div
+          class="card-header text-center"
+          style="background: var(--warning-gradient); color: #333"
+        >
+          <h5 class="mb-0">
+            <i class="fas fa-edit me-2"></i>Actualizar Predicciones
+          </h5>
+        </div>
+        <div class="card-body p-4">
+          <form method="POST">
+            <div class="mb-3">
+              <label for="city" class="form-label">Ciudad</label>
+              <input
+                type="text"
+                class="form-control"
+                id="city"
+                name="city"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="prices" class="form-label">Precios (JSON)</label>
+              <input
+                type="text"
+                class="form-control"
+                id="prices"
+                name="prices"
+                required
+                oninput="validateJSON(this)"
+              />
+              <div class="invalid-feedback">Formato JSON inválido.</div>
+            </div>
+            <button type="submit" class="btn btn-warning w-100">
+              <i class="fas fa-sync-alt me-2"></i>Actualizar
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+          <i class="fas fa-arrow-left me-2"></i>Volver al Inicio
+        </a>
+      </div>
     </div>
-    <div class="mb-3">
-        <label for="prices" class="form-label">Precios (JSON)</label>
-        <input type="text" class="form-control" id="prices" name="prices" required>
-    </div>
-    <button type="submit" class="btn btn-warning">Actualizar</button>
-</form>
+  </div>
+</div>
+
+<script>
+  function validateJSON(input) {
+    try {
+      JSON.parse(input.value);
+      input.classList.remove("is-invalid");
+      input.classList.add("is-valid");
+    } catch {
+      input.classList.add("is-invalid");
+      input.classList.remove("is-valid");
+    }
+  }
+</script>
 {% endblock %}
