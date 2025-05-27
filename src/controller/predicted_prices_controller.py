@@ -34,6 +34,7 @@ class PredictedPricesController:
         cursor = cls.getCursor()
 
         # serializamos la lista de precios a JSON
+        predicted_price.city = predicted_price.city.strip().lower()
         prices_json = json.dumps(predicted_price.prices)
 
         query = "INSERT INTO predicted_prices (city, prices) VALUES (%s, %s);"
@@ -45,6 +46,7 @@ class PredictedPricesController:
     def queryCityPrices(cls, city: Optional[str]) -> Optional[PredictedPrices]:
         if city is None:
             raise psycopg2.IntegrityError("city must not be null")
+        city = city.strip().lower()
         cursor = cls.getCursor()
         query = "SELECT id, predicted_at, city, prices FROM predicted_prices WHERE city = %s;"
         cursor.execute(query, (city,))
@@ -66,6 +68,7 @@ class PredictedPricesController:
         """
         if predicted_price.city is None:
             raise psycopg2.IntegrityError("city must not be null")
+        predicted_price.city = predicted_price.city.strip().lower()
         cursor = cls.getCursor()
         prices_json = json.dumps(predicted_price.prices)
         query = """
@@ -82,6 +85,7 @@ class PredictedPricesController:
         DELETE record by city.
         """
         cursor = cls.getCursor()
+        city = city.strip().lower()
         query = "DELETE FROM predicted_prices WHERE city = %s;"
         cursor.execute(query, (city,))
         cursor.connection.commit()
