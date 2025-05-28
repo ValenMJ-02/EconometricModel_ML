@@ -204,7 +204,7 @@ Para usar la página web que te ayuda a gestionar información y ver prediccione
 
 ##### i. En tu computadora:
 Puedes visitarla directamente si ya está en internet, en:
-https://hipotecainversa.onrender.com
+https://econometricmodel-ml.onrender.com
 
 ## **Licencia**
 
