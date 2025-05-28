@@ -153,7 +153,7 @@ Si deseas contribuir a este proyecto, sigue estos pasos:
 ## La Aplicación Web
 La aplicación web, hecha con Flask, es una interfaz fácil de usar que te permite gestionar información clave y consultar las predicciones de precios generadas por el modelo de Machine Learning. Funciona como un panel de control intuitivo donde puedes:
 
-Manejar tu Información: Podrás añadir, buscar, actualizar y borrar datos de clientes, propiedades, hipotecas y pagos. Esto es útil para llevar un registro de todo lo relacionado con las casas.
+Manejar tu Información: Podrás añadir, buscar y actualizar. Esto es útil para llevar un registro de todo lo relacionado con las casas.
 Ver y Guardar Predicciones de Precios: La página te permitirá ver las predicciones de precios de casas que hizo nuestro modelo. También podrás guardar esas predicciones en la base de datos para consultarlas más tarde, quizás buscando por ciudad.
 Usarla Fácilmente: Todo está organizado de forma clara con tablas y formularios, lo que la hace muy sencilla de usar.
 Toda la información se guarda de forma segura en una base de datos en la nube (Neon).
@@ -164,16 +164,17 @@ Para poner en marcha el proyecto, sigue estos pasos. Puedes usarlo de dos manera
 ### 1. Instalación de Dependencias
 Primero, asegúrate de tener todas las herramientas necesarias. Abre tu consola y ejecuta este comando para instalar las librerías de Python listadas en el archivo requirements.txt:
 
-Bash
+```
 
 pip install -r requirements.txt
+```
 ### 2. Clonar el Repositorio
 Si aún no lo tienes, descarga el proyecto a tu computadora con Git:
 
-Bash
-
+```
 git clone https://github.com/ValenMJ-02/EconometricModel_ML.git
 cd EconometricModel_ML
+```
 ### 3. Configuración de la Base de Datos (Neon)
 La página web necesita un lugar para guardar tus datos y las predicciones. Usamos Neon, una base de datos en la nube.
 
@@ -193,9 +194,10 @@ PGPASSWORD = os.getenv("PGPASSWORD")
 #### c. Paso 3: Deja la base de datos lista.
 Después de configurar la conexión, necesitamos crear los "espacios" (tablas) donde se guardará tu información. Abre tu consola, ve a la carpeta principal del proyecto y ejecuta este comando. Esto preparará la base de datos para guardar clientes, propiedades, hipotecas, pagos y las predicciones de precios:
 
-Bash
+```
 
 python -c "from src.controller.predicted_prices_controller import PredictedPricesController; from src.controller.model_controller import model_controller; from src.controller.data_controller import data_controller"
+```
 ### 4. Ejecución del Programa (Modos de Uso)
 #### a. Ejecutar la Página Web
 Para usar la página web que te ayuda a gestionar información y ver predicciones:
